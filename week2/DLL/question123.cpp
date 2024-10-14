@@ -40,6 +40,9 @@ public:
     bool    empty();
     int     indexOf(const T &item);
     bool    contains(const T &item);
+    T       removeAt(int index);
+    bool    removeItem(const T& item);
+    void    clear();
 
 public:
     class Node
@@ -205,31 +208,74 @@ template <class T>
 bool DLinkedList<T>::contains(const T &item)
 {
     /* Check if item appears in the list */
-    Node *temp = head;
-    while (temp)
-    {
-        if (temp->data == item)
-        {
-            return true;
+    return indexOf(item) != -1;
+}
+
+template <class T>
+T DLinkedList<T>::removeAt(int index)
+{
+    /* Remove element at index and return removed value */
+    if (index < 0 || index >= count) throw out_of_range("Index is out of range!");
+
+    Node* delNode;
+
+    if (index == 0) { // remove at front
+        delNode = head;
+        head = head->next;
+        if (!head) tail = nullptr;
+        else head->previous = nullptr;
+    } else if (index == count - 1) { // remove at tail
+        delNode = tail;
+        tail = tail->previous;
+        tail->next = nullptr;
+    } else {
+        Node* temp = head;
+        for (int i = 0; i < index - 1; i++) { // remove in the middle
+            temp = temp->next;
         }
-        temp = temp->next;
+        delNode = temp->next;
+
+        temp->next = delNode->next;
+        temp->next->previous = temp;
+    }
+
+    T removedData = delNode->data;
+    delete delNode;
+    return removedData;
+}
+
+template <class T>
+bool DLinkedList<T>::removeItem(const T& item)
+{
+    /* Remove the first apperance of item in list and return true, otherwise return false */
+    int pos = indexOf(item);
+    if (pos != -1) {
+        removeAt(pos);
+        return true;
     }
     return false;
 }
 
+template<class T>
+void DLinkedList<T>::clear(){
+    /* Remove all elements in list */
+    if (!count) return;
+    Node* temp = head;
+    while (temp) {
+        Node* delNode = temp;
+        temp = temp->next;
+        delete delNode;
+    }
+    count = 0;
+    head = tail = nullptr;
+}
+
 int main()
 {
-
     DLinkedList<int> list;
-    int size = 10;
-    for (int idx = 0; idx < size; idx++)
-    {
-        list.add(idx);
-    }
-    for (int idx = 0; idx < size; idx++)
-    {
-        cout << list.get(idx) << " |";
-    }
+    list.add(1);
+    list.removeAt(0);
+    cout << list.toString();
 
     return 0;
 }
