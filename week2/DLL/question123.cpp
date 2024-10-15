@@ -241,6 +241,7 @@ T DLinkedList<T>::removeAt(int index)
 
     T removedData = delNode->data;
     delete delNode;
+    count--;
     return removedData;
 }
 
@@ -259,7 +260,6 @@ bool DLinkedList<T>::removeItem(const T& item)
 template<class T>
 void DLinkedList<T>::clear(){
     /* Remove all elements in list */
-    if (!count) return;
     Node* temp = head;
     while (temp) {
         Node* delNode = temp;
@@ -273,8 +273,13 @@ void DLinkedList<T>::clear(){
 int main()
 {
     DLinkedList<int> list;
-    list.add(1);
-    list.removeAt(0);
+    int size = 10;
+    int value[] = {2,5,6,3,67,332,43,1,0,9};
+
+    for(int idx=0; idx < size; idx++){
+        list.add(0, value[idx]);
+    }
+    list.removeAt(10);
     cout << list.toString();
 
     return 0;
