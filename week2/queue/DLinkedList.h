@@ -1,3 +1,6 @@
+#ifndef DLINKEDLIST_H
+#define DLINKEDLIST_H
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -256,17 +259,4 @@ void DLinkedList<T>::clear(){
     head = tail = nullptr;
 }
 
-int main()
-{
-    DLinkedList<int> list;
-    int size = 10;
-    int value[] = {2,5,6,3,67,332,43,1,0,9};
-
-    for(int idx=0; idx < size; idx++){
-        list.add(0, value[idx]);
-    }
-    list.removeAt(10);
-    cout << list.toString();
-
-    return 0;
-}
+#endif
