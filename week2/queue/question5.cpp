@@ -21,7 +21,7 @@ int secondsToBeRotten(vector<vector<int>>& grid) {
     }
     if (freshCount == 0) return 0;
 
-    vector<pair<int, int>> directions = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
+    vector<pair<int, int>> directions = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
     while (!rotten.empty()) {
         int len = rotten.size();
         bool isRotten = false;
@@ -34,7 +34,7 @@ int secondsToBeRotten(vector<vector<int>>& grid) {
                 int newX = x + dir.first;
                 int newY = y + dir.second;
 
-                if (newX > 0 && newX < n && newY > 0 && newY < m && grid[newX][newY] == 1) {
+                if (newX >= 0 && newX < n && newY >= 0 && newY < m && grid[newX][newY] == 1) {
                     grid[newX][newY] = 2;
                     freshCount--;
                     rotten.push({newX, newY});
@@ -48,12 +48,9 @@ int secondsToBeRotten(vector<vector<int>>& grid) {
 }
 
 int main() {
-    int rows, cols;
-    cin >> rows >> cols;
-    vector<vector<int>> grid(rows, vector<int>(cols));
-    for(int i = 0; i < rows; i++) {
-        for(int j = 0; j < cols; j++) cin >> grid[i][j];
-    }
-    cout << secondsToBeRotten(grid);
+    vector<vector<int>> grid = { {0, 1, 2},
+                                 {0, 1, 2},
+                                 {1, 1, 1}};
+    cout << secondsToBeRotten(grid) << endl;
     return 0;
 }
