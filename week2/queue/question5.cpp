@@ -50,7 +50,7 @@ int secondsToBeRotten(vector<vector<int>>& grid) {
 int main() {
     vector<vector<int>> grid = { {0, 1, 2},
                                  {0, 1, 2},
-                                 {1, 1, 1}};
+                                 {2, 1, 1}};
     cout << secondsToBeRotten(grid) << endl;
     return 0;
 }
