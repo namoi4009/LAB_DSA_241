@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -15,10 +17,10 @@ void bfs(vector<vector<int>> graph, int start) {
 
         cout << node << " ";
 
-        for (int i = 0; i < graph.size(); i++) {
-            if (graph[node][i] == 1 && visited[i] == false && i != node) {
-                visited[i] = true;
-                adj.push(i);
+        for (int neighbor : graph[node]) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                adj.push(neighbor);
             }
         }
     }
