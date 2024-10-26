@@ -27,12 +27,12 @@ int secondsToBeRotten(vector<vector<int>>& grid) {
         bool isRotten = false;
 
         for (int i = 0; i < len; i++) {
-            auto [x, y] = rotten.front();
+            pair<int, int> pos = rotten.front();
             rotten.pop();
 
             for (auto dir : directions) {
-                int newX = x + dir.first;
-                int newY = y + dir.second;
+                int newX = pos.first + dir.first;
+                int newY = pos.second + dir.second;
 
                 if (newX >= 0 && newX < n && newY >= 0 && newY < m && grid[newX][newY] == 1) {
                     grid[newX][newY] = 2;

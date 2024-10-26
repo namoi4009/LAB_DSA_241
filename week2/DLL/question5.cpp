@@ -78,6 +78,49 @@ ListNode* reverse(ListNode* head, int a, int b) {
     return head;
 }
 
+ListNode* reverseSample(ListNode* head, int a, int b) {
+    if (a == b || !head) return head;
+
+    ListNode* beforeA = nullptr; 
+    ListNode* A = head;    
+    ListNode* B = head;    
+    ListNode* afterB = nullptr;   
+
+    for (int i = 1; i < a && A; ++i) {
+        beforeA = A;
+        A = A->right;
+    }
+
+    for (int i = 1; i < b && B; ++i) {
+        B = B->right;
+    }
+    afterB = B->right;
+
+    ListNode* prev = afterB; 
+    ListNode* curr = A;
+    while (curr != afterB) {
+        ListNode* next = curr->right;
+        curr->right = prev;   
+        curr->left = next;    
+        prev = curr;          
+        curr = next;
+    }
+
+    if (beforeA) {
+        beforeA->right = B; 
+        B->left = beforeA;
+    } else {
+        head = B;
+    }
+
+    A->right = afterB; 
+    if (afterB) {
+        afterB->left = A;
+    }
+
+    return head;
+}
+
 int main() {
     ListNode* head = nullptr;
     for (int i = 3; i <= 7; i++)

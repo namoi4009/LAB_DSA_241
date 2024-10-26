@@ -5,7 +5,7 @@ using namespace std;
 
 long long toInteger(string number) {
     long long res = 0;
-    for (int i = 0; i < number.size(); i++) {
+    for (unsigned int i = 0; i < number.size(); i++) {
         res = (res * 10) + (number[i] - '0');
     }
     return res;

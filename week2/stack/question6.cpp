@@ -67,6 +67,64 @@ bool canEatFood(int maze[5][5], int fx, int fy){
     return false;
 }
 
+bool canEatFoodSample(int maze[5][5], int fx, int fy) {
+    stack<Node*> travel;
+    Node* newNode = new Node(0, 0);
+    travel.push(newNode);
+    
+    while (!travel.empty()) {
+        Node* curr = travel.top();
+        int x = curr->x;
+        int y = curr->y;
+
+        if (x == fx && y == fy) {
+            return true; 
+        }
+
+        if (curr->dir == 0) { // try up direction
+            curr->dir++;
+            int newY = y - 1;
+            if (newY >= 0 && maze[x][newY] == 1) { 
+                Node* next = new Node(x, newY);
+                travel.push(next);
+                maze[x][newY] = 0; 
+            }
+        } 
+        else if (curr->dir == 1) { // try left direction
+            curr->dir++;
+            int newX = x - 1;
+            if (newX >= 0 && maze[newX][y] == 1) { 
+                Node* next = new Node(newX, y);
+                travel.push(next);
+                maze[newX][y] = 0; 
+            }
+        } 
+        else if (curr->dir == 2) { // try down direction
+            curr->dir++;
+            int newY = y + 1;
+            if (newY < 5 && maze[x][newY] == 1) { 
+                Node* next = new Node(x, newY);
+                travel.push(next);
+                maze[x][newY] = 0; 
+            }
+        } 
+        else if (curr->dir == 3) { // try right direction
+            curr->dir++;
+            int newX = x + 1;
+            if (newX < 5 && maze[newX][y] == 1) { 
+                Node* next = new Node(newX, y);
+                travel.push(next);
+                maze[newX][y] = 0; 
+            }
+        } 
+        else { // dead-end
+            travel.pop();
+        }
+    }
+    
+    return false; 
+}
+
 int main() {
     // Maze matrix
     int maze[5][5] = {

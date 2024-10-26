@@ -78,7 +78,6 @@ public:
 template <class T>
 void SLinkedList<T>::bubbleSort() {
     if (this->head == nullptr || this->head->next == nullptr) {
-        // List is empty or has only one element, no sorting needed
         return;
     }
 
