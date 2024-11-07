@@ -3,46 +3,53 @@
 
 using namespace std;
 
-struct Item {
-    int val;
-    int fre;
-};
-
-bool compareByFre(const Item& a, const Item& b) {
-    return a.fre > b.fre;
-}
-
-bool containsValue(Item* items, int n, int value) {
-    if (n == 0) return false;
-
-    for (int i = 0; i < n; i++) 
-        if (items[i].val == value) return true;
-    return false;
+int getIndex(int arr[], int n, int e) {
+    if (n == 0) return -1;
+    for (int i = 0; i < n; i++) {
+        if (e == arr[i]) return i;
+    }
+    return -1;
 }
 
 void sortByFrequency(int arr[], int n){
-    Item* items = new Item[n];
-    int index = 0;
+    // count frequency
+    int e[n], f[n];
+    int count = 0;
     for (int i = 0; i < n; i++) {
-        if (!index || !containsValue(items, index, arr[i])) {
-            items[index].val = arr[i];
-            items[index++].fre = count(arr, arr + n, arr[i]);
+        int index = getIndex(e, count, arr[i]);
+        if (index == -1) {
+            e[count] = arr[i];
+            f[count++] = 1;
+        } else f[index]++;
+    }
+
+    // sort the "e" array
+    for (int i = 1; i < count; i++) {
+        int keyf = f[i];
+        int keye = e[i];
+        int j = i - 1;
+        while (j >= 0 && f[j] < keyf) {
+            f[j + 1] = f[j];
+            e[j + 1] = e[j];
+            j--;
+        }
+        f[j + 1] = keyf;
+        e[j + 1] = keye;
+    }
+
+    // pour the value from e[] to arr[] based on f[]
+    int it = 0;
+    for (int i = 0; i < count; i++) {
+        int time = f[i];
+        while (time > 0) {
+            arr[it++] = e[i];
+            time--;
         }
     }
-    sort(items, items + index, compareByFre);
-    int i = 0, j = 0;
-    while (i < n) {
-        while (items[j].fre > 0) {
-            arr[i++] = items[j].val;
-            items[j].fre--;
-        }
-        j++;
-    }
-    delete []items;
 }
 
 int main() {
-    int arr[] = {-4,1,2,2,-4,9,1,-1};
-    sortByFrequency(arr, 8);
+    int arr[] = {-5,3,8,1,-9,-9};
+    sortByFrequency(arr, 6);
     return 0;
 }
