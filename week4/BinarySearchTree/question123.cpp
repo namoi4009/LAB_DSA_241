@@ -38,8 +38,10 @@ public:
 
     Node* helpDel(Node* node, T value) {
         if (!node) return nullptr;
-        if (value < node->value) helpDel(node->pLeft, value);
-        else if (value > node->value) helpDel(node->pRight, value);
+        if (value < node->value) 
+            node->pLeft = helpDel(node->pLeft, value);
+        else if (value > node->value) 
+            node->pRight = helpDel(node->pRight, value);
         else {
             if (!node->pLeft && !node->pRight) {
                 delete node;
