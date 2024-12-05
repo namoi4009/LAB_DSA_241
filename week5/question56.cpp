@@ -119,9 +119,32 @@ public:
     // ===== Code Cau 6: End =====
 
     // ===== Code Cau 9: Start ====
+    void helpTop(int v, Adjacency* adj, list<bool>& visited, list<int>& stack) {
+        auto item = visited.begin(); advance(item, v);
+        *item = true; // set the node as "visited"
+        for (int i = 0; i < adj[v].getSize(); ++i) {
+            auto vertex = adj[v].getElement(i);
+            item = visited.begin(); advance(item, vertex);
+            if (!*item) 
+                helpTop(vertex, adj, visited, stack);
+        }
+        stack.push_front(v);
+    }
+
     void topologicalSort(){
         //TODO
+        list<int> stack;
+        list<bool> visited(this->V, false);
 
+        for (int i = 0; i < this->V; ++i) {
+            auto item = visited.begin(); advance(item, i);
+            if (!*item) 
+                helpTop(i, adj, visited, stack);
+        }
+
+        for (auto it : stack) {
+            cout << it << " ";
+        }
     }
     // ===== Code Cau 9: End =====
 };
@@ -135,7 +158,7 @@ int main() {
     g.addEdge(2, 3);
     g.addEdge(3, 1);
 
-    Adjacency* arr = g.DFS(5);
-    arr->printArray();
+    // g.topologicalSort();
+    g.printGraph();
     return 0;
 }
