@@ -8,7 +8,10 @@ using namespace std;
 
 int Dijkstra(int** graph, int src, int dst) {
 	// TODO: return the length of shortest path from src to dst.
-    const int n = 6; // since n not define, we set it to const 6
+    int n = 0;
+    while (graph[n] != nullptr && graph[n][0] != -1) {
+        ++n ;
+    }
 
     vector<int> dist(n, INT_MAX);
     vector<bool> visited(n, false);
